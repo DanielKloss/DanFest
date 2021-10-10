@@ -1,1 +1,5 @@
 @font-face { font-family: carbonBlock; src: url('./CarbonBlock.ttf'); }
+
+body {
+    margin: 0;
+}

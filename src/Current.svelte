@@ -26,7 +26,6 @@
      }
    ];
 
-  let year = new Date().getFullYear();
   let invitationCode;
   let attending = "attending";
   let shooting = "zombies";
@@ -49,7 +48,7 @@
 
 <main>
 	<h2>18th December 2021</h2>
-	<p>In 2020 DanFest went virtual. In 2021 DanFest is taking one step back towards the real world. You have been selected to participate in a VR experience at <a href="https://www.navrtar.com/">Navrtar</a> in Ealing. There is limited availability in the VR team but plus ones are welcome to the after party at a pub in Ealing.</p>
+	<p>In 2020 DanFest went virtual. In 2021 DanFest is taking one step back towards the real world. You have been selected to participate in a VR experience at <a href="https://www.navrtar.com/">Navrtar</a> in Ealing on 18th December. There is limited availability in the VR team but plus ones are welcome to the after party at a pub in Ealing.</p>
 	<p>The experience and food will be included in your DanFest2021 ticket</p>
 	<p>Please enter your invitation code, choose whether you want to shoot zombies or aliens and RSVP below</p>
 		

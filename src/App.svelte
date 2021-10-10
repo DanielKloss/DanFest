@@ -8,8 +8,8 @@
 
 <main>
 	<ul class="header">
-		<button on:click="{() => page = 'current'}" >DANFEST {year}</button>
-		<button on:click="{() => page = 'history'}" class="history">HISTORY</button>
+		<button on:click="{() => page = 'current'}" class="current">DANFEST {year}</button>
+		<img src="/history.svg" alt="" on:click="{() => page = 'history'}" class="history"/>
 	</ul>
 
 	{#if page=="current"}
@@ -32,7 +32,7 @@
 		justify-content: space-between;
 		list-style-type: none;
 		background-color: #DE0000;
-		padding: 0.25em;
+		padding: 0.25em 1em;
 		margin: 0;
 	}
 
@@ -46,6 +46,7 @@
 	}
 
 	.history {
-		font-size: 2em;
+		width: 2em;
+		cursor: pointer;
 	}
 </style>
