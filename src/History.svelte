@@ -1,45 +1,42 @@
 <script>
-  async function getLocations() {
-    const locationsResult = await fetch('http://192.168.1.123:3000/danfest/apilocations');
-		return await locationsResult.json();
-  }
+  import * as apiConfig from './apiConfig.json'
 
   async function getAttendees(year) {
-    const attendeesResult = await fetch('http://192.168.1.123:3000/danfest/apiattendees?year=' + year);
+    const attendeesResult = await fetch(apiConfig.attendeesByYear + year);
 		return await attendeesResult.json();
   }
 
-  let locations = getLocations();
-  let attendees2020 = getAttendees("2020");
+  async function getAllFests() {
+    const festsResult = await fetch(apiConfig.allFests);
+    let fests = await festsResult.json();
+    for (let i = 0; i < fests.rows.length; i++) {
+      fests.rows[i].attendees = getAttendees(fests.rows[i].year);
+    }
+    return fests;
+  }
+
+  let fests = getAllFests();
 </script>
 
 <main>
-  {#await locations then value}
-    {#each value.rows as row}
-      <p>{row.name}</p>
-    {/each}
-  {/await}
-  {#await attendees2020 then value}
-    {#each value.rows as row}
-      <p>{row.name}</p>
-    {/each}
-  {/await}
-    <!-- <ul>
-        {#each history as event}
-          <h2>{event.year} - {event.title}</h2>
-            <ul>
-                {#each event.venues as venue}
-                  <p class="venue">{venue}</p>
-                {/each}
-            </ul>
-            <p class="description">{event.description}</p>
-            <ul>
-              {#each event.attendees as attendee}
-                <p class="attendee">{attendee}</p>
-              {/each}
-            </ul>
+  {#await fests then festsValue}
+    {#each festsValue.rows as row}
+      <div class="festHeader">
+        <div class="year">
+          <h1>{row.year}</h1>
+        </div>
+        <div class="title">
+          <h2>{row.title}</h2>
+        </div>
+      </div>
+      <div class="venue">{row.name}</div>
+      {#await row.attendees then attendeesValue}
+        {#each attendeesValue.rows as row}
+          <p class="attendee">{row.name}</p>
         {/each}
-    </ul> -->
+      {/await}
+    {/each}
+  {/await}
 </main>
 
 <style>
@@ -49,18 +46,45 @@
 		margin:0 auto;
 	}
 	
+  .festHeader{
+    display:flex;
+    align-items: stretch;
+    gap: 0.5em;
+    margin: 0.5em auto;
+  }
+
+  .year{
+    display: flex;
+    align-items: center;
+    background-color: #DE0000;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    background-color: #DE0000;
+  }
+
+  h1{
+    font-size: 4em;
+		font-family: carbonBlock;
+    margin: 0;
+    padding: 0.05em 0.25em;
+  }
+
 	h2 {
-		text-align:center;
 		font-size: 2em;
 		font-family: carbonBlock;
-		background-color: #DE0000;
     text-transform: uppercase;
-    margin-bottom: 0.25em;
+    margin: 0;
+    text-align: center;
+    padding: 0.05em 0.25em;
 	}
 
-  ul {
-    padding-left: 0;
+  .venue {
     text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-weight: bold;
   }
 
 	p {
@@ -68,20 +92,7 @@
     display: inline;
 	}
 
-  .venue {
-    font-weight: bold;
-    font-size: 1.25em;
-  }
-
-  .description{
-    font-style: italic;
-  }
-
-  .venue ~ .venue:before {
-    content: ", ";
-  }
-
-  .attendee ~ .attendee:before {
+  .attendee + .attendee:before {
     content: ", ";
   }
 </style>

@@ -9,7 +9,7 @@
 <main>
 	<ul class="header">
 		<button on:click="{() => page = 'current'}" class="current">DANFEST {year}</button>
-		<img src="/history.svg" alt="" on:click="{() => page = 'history'}" class="history"/>
+		<img src="./history.svg" alt="" on:click="{() => page = 'history'}" class="history"/>
 	</ul>
 
 	{#if page=="current"}
