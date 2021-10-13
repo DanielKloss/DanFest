@@ -3,7 +3,7 @@
 	import History from "./History.svelte";
 
     let year = new Date().getFullYear();
-	let page = "current";
+	let page = "history";
 </script>
 
 <main>

@@ -1,35 +1,30 @@
 <script>
-    let history = [
-		{
-			year:"2020",
-      title: "The one that was Virtual",
-      venues: ["Virtual"],
-      description: "Pub Dinner and Quiz by Nom and Flight Club",
-      attendees: ["Dan", "Georgie", "Mark", "Nom"]
-    },
-		{
-    	year: "2019",
-      title: "The one with the Inner Sanctum",
-      venues: ["Friern Park"],
-      attendees: ["Dan", "Georgie", "Nat", "Thomas", "Tash", "Tom"]
-    },
-		{
-    	year: "2018",
-      title: "The one where they threw Darts",
-      venues: ["Pub", "Flight Club"],
-      attendees: ["Dan", "Georgie", "Mark", "Nom"]
-    },
-		{
-    	year: "2017",
-      title: "The one where Nom fell asleep",
-      venues: ["Friern Park"],
-      attendees: ["Dan", "Georgie", "Mark", "Nom"]
-    }
-	];
+  async function getLocations() {
+    const locationsResult = await fetch('http://192.168.1.123:3000/danfest/apilocations');
+		return await locationsResult.json();
+  }
+
+  async function getAttendees(year) {
+    const attendeesResult = await fetch('http://192.168.1.123:3000/danfest/apiattendees?year=' + year);
+		return await attendeesResult.json();
+  }
+
+  let locations = getLocations();
+  let attendees2020 = getAttendees("2020");
 </script>
 
 <main>
-    <ul>
+  {#await locations then value}
+    {#each value.rows as row}
+      <p>{row.name}</p>
+    {/each}
+  {/await}
+  {#await attendees2020 then value}
+    {#each value.rows as row}
+      <p>{row.name}</p>
+    {/each}
+  {/await}
+    <!-- <ul>
         {#each history as event}
           <h2>{event.year} - {event.title}</h2>
             <ul>
@@ -44,7 +39,7 @@
               {/each}
             </ul>
         {/each}
-    </ul>
+    </ul> -->
 </main>
 
 <style>
