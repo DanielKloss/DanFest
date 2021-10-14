@@ -30,10 +30,13 @@
         </div>
       </div>
       <div class="venue">{row.name}</div>
+      <div class="activities">{row.activities}</div>
       {#await row.attendees then attendeesValue}
-        {#each attendeesValue.rows as row}
-          <p class="attendee">{row.name}</p>
-        {/each}
+        <div class="attendees">
+          {#each attendeesValue.rows as row}
+            <p class="attendee">{row.name}</p>
+          {/each}
+        </div>
       {/await}
     {/each}
   {/await}
@@ -85,6 +88,16 @@
     text-align: center;
     font-family: 'Jost', sans-serif;
     font-weight: bold;
+  }
+
+  .activities {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-style: italic;
+  }
+
+  .attendees {
+    text-align: center;
   }
 
 	p {

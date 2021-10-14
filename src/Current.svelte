@@ -1,5 +1,6 @@
 <script>
 	import * as apiConfig from './apiConfig.json'
+	import * as animateScroll from "svelte-scrollto";
 
 	async function getInvites() {
 		const invitesResult = await fetch(apiConfig.invites2021);
@@ -9,22 +10,22 @@
 	let invites = getInvites();
 
 	let invitationCode;
-	let attending = "attending";
+	let attending = "Attending";
 	let shooting = "zombies";
-
-	function removeSurname(fullName){
-		return fullName.substr(0,fullName.indexOf(' '));
-	}
 
 	async function updateInvite() {
 		let zombies = shooting=="zombies"?true:false;
 		let updatedInvite = { 
-			invitationCode:invitationCode,
+			invitationCode:invitationCode.toLowerCase(),
 			attending:attending,
 			shooting:zombies
 		}
-		const inviteUpdateResult = await fetch(apiConfig.updateInvite, {method: 'POST', body: JSON.stringify(updatedInvite), headers: {'Content-Type': 'application/json'}});
-		return await inviteUpdateResult.json();
+		await fetch(apiConfig.updateInvite, {method: 'POST', body: JSON.stringify(updatedInvite), headers: {'Content-Type': 'application/json'}});
+		invites = getInvites();
+		invitationCode = ""
+		attending = "Attending";
+		shooting = "zombies";
+		animateScroll.scrollTo({element: '.attendee'});
 	}
 </script>
 
@@ -34,32 +35,32 @@
 	<p>The experience and food will be included in your DanFest2021 ticket</p>
 	<p>Please enter your invitation code, choose whether you want to shoot zombies or aliens and RSVP below</p>
 		
-		<div class="form">
-			<input type="text" bind:value={invitationCode} placeholder="Enter your invitation code">
-			<div class="formContainer attendingContainer" class:notAttending="{attending === 'notAttending'}">
-				<input type="radio" name="attendingStatus" id="attending" bind:group={attending} value={'attending'} checked>
-				<label for="attending">Attending</label>
-				<input type="radio" name="attendingStatus" id="notAttending" bind:group={attending} value={'notAttending'}>
-				<label for="notAttending">Not Attending</label>
-			</div>
-
-			<div class="formContainer shootingContainer" class:aliens="{shooting === 'aliens'}">
-				<input type="radio" name="shoot" id="zombies" bind:group={shooting} value={'zombies'} checked>
-				<label for="zombies">Zombies</label>
-				<input type="radio" name="shoot" id="aliens" bind:group={shooting} value={'aliens'}>
-				<label for="aliens">Aliens</label>
-			</div>
-
-			<button on:click={updateInvite}>RSVP</button>
-</div>
-{#await invites then invitesValue}
-    {#each invitesValue.rows as row}
-    	<div class="attendee" class:attendingStatus="{row.attending == 'Attending'}" class:notAttendingStatus="{row.attending == 'Not Attending'}">
-			<p>{removeSurname(row.name)}</p>
-			<p>{row.attending}</p>	
+	<div class="form">
+		<input type="text" bind:value={invitationCode} placeholder="Enter your invitation code">
+		<div class="formContainer attendingContainer" class:notAttending="{attending === 'Not Attending'}">
+			<input type="radio" name="attendingStatus" id="attending" bind:group={attending} value={'Attending'} checked>
+			<label for="attending">Attending</label>
+			<input type="radio" name="attendingStatus" id="notAttending" bind:group={attending} value={'Not Attending'}>
+			<label for="notAttending">Not Attending</label>
 		</div>
-	{/each}
-  {/await}
+
+		<div class="formContainer shootingContainer" class:aliens="{shooting === 'aliens'}">
+			<input type="radio" name="shoot" id="zombies" bind:group={shooting} value={'zombies'} checked>
+			<label for="zombies">Zombies</label>
+			<input type="radio" name="shoot" id="aliens" bind:group={shooting} value={'aliens'}>
+			<label for="aliens">Aliens</label>
+		</div>
+
+		<button on:click={updateInvite}>RSVP</button>
+	</div>
+	{#await invites then invitesValue}
+    	{#each invitesValue.rows as row}
+    		<div class="attendee" class:attendingStatus="{row.attending == 'Attending'}" class:notAttendingStatus="{row.attending == 'Not Attending'}">
+				<p>{row.name}</p>
+				<p>{row.attending}</p>	
+			</div>
+		{/each}
+  	{/await}
 </main>
 
 <style>
