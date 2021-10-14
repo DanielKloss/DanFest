@@ -1,49 +1,31 @@
 <script>
-     let attendees = [
-     {
-       name: "James",
-       invitationCode: "tw1n5un",
-       attending: "No Response",
-       zombies: true
-     },
-     {
-       name: "Matt",
-       invitationCode: "fr33dy_adu",
-       attending: "No Response",
-       zombies: true
-     },
-     {
-       name: "Mark",
-       invitationCode: "h0ck3y",
-       attending: "No Response",
-       zombies: true
-     },
-     {
-       name: "Thomas",
-       invitationCode: "lil-y3ll",
-       attending: "No Response",
-       zombies: true
-     }
-   ];
+	import * as apiConfig from './apiConfig.json'
 
-  let invitationCode;
-  let attending = "attending";
-  let shooting = "zombies";
+	async function getInvites() {
+		const invitesResult = await fetch(apiConfig.invites2021);
+		return await invitesResult.json();
+	}
 
-   function submit(){
-     for (const attendee of attendees) {
-       if (attendee.invitationCode == invitationCode) {
-				 if (attending == true){
-						attendee.attending = "Attending";
-				 } else {
-						attendee.attending = "Not Attending";
-				 }
-         attendee.shooting = shooting;
-         break;
-       }
-     }
-		 attendees = attendees;
-   }
+	let invites = getInvites();
+
+	let invitationCode;
+	let attending = "attending";
+	let shooting = "zombies";
+
+	function removeSurname(fullName){
+		return fullName.substr(0,fullName.indexOf(' '));
+	}
+
+	async function updateInvite() {
+		let zombies = shooting=="zombies"?true:false;
+		let updatedInvite = { 
+			invitationCode:invitationCode,
+			attending:attending,
+			shooting:zombies
+		}
+		const inviteUpdateResult = await fetch(apiConfig.updateInvite, {method: 'POST', body: JSON.stringify(updatedInvite), headers: {'Content-Type': 'application/json'}});
+		return await inviteUpdateResult.json();
+	}
 </script>
 
 <main>
@@ -68,15 +50,16 @@
 				<label for="aliens">Aliens</label>
 			</div>
 
-			<button on:click={submit}>RSVP</button>
+			<button on:click={updateInvite}>RSVP</button>
 </div>
-
-  {#each attendees as attendee}
-	<div class="attendee" class:attendingStatus="{attendee.attending == 'Attending'}" class:notAttendingStatus="{attendee.attending == 'Not Attending'}">
-		<p>{attendee.name}</p>
-		<p>{attendee.attending}</p>	
-	</div>
-  {/each}
+{#await invites then invitesValue}
+    {#each invitesValue.rows as row}
+    	<div class="attendee" class:attendingStatus="{row.attending == 'Attending'}" class:notAttendingStatus="{row.attending == 'Not Attending'}">
+			<p>{removeSurname(row.name)}</p>
+			<p>{row.attending}</p>	
+		</div>
+	{/each}
+  {/await}
 </main>
 
 <style>
