@@ -2,7 +2,7 @@
 	import Current from "./Current.svelte";
 	import History from "./History.svelte";
 
-	let page = "history";
+	let page = "current";
 </script>
 
 <main>

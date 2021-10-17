@@ -49,6 +49,7 @@
 		width:70%;
 		max-width: 500px;
 		margin:0 auto;
+    padding-bottom: 1rem;
 	}
 	
   .festHeader{
@@ -77,6 +78,7 @@
     align-items: center;
     background-color: #DE0000;
     border-right: black solid 0.2rem;
+    flex-grow: 2;
   }
 
   h1{
