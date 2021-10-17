@@ -29,15 +29,17 @@
           <h2>{row.title}</h2>
         </div>
       </div>
-      <div class="venue">{row.name}</div>
-      <div class="activities">{row.activities}</div>
-      {#await row.attendees then attendeesValue}
-        <div class="attendees">
-          {#each attendeesValue.rows as row}
-            <p class="attendee">{row.name}</p>
-          {/each}
-        </div>
-      {/await}
+      <div class="festDetails">
+        <div class="venue">{row.name}</div>
+        <div class="activities">{row.activities}</div>
+        {#await row.attendees then attendeesValue}
+          <div class="attendees">
+            {#each attendeesValue.rows as row}
+              <p class="attendee">{row.name}</p>
+            {/each}
+          </div>
+        {/await}
+      </div>
     {/each}
   {/await}
 </main>
@@ -52,36 +54,45 @@
   .festHeader{
     display:flex;
     align-items: stretch;
-    gap: 0.5em;
-    margin: 0.5em auto;
+    gap: 0.5rem;
+    margin: 1.5rem auto 0 auto;
+  }
+
+  .festDetails {
+    border-left: black solid 0.2rem;
+    border-right: black solid 0.2rem;
+    border-bottom: black solid 0.2rem;
+    padding: 0.5rem 0.25rem;
   }
 
   .year{
     display: flex;
     align-items: center;
     background-color: #DE0000;
+    border-left: black solid 0.2rem;
   }
 
   .title {
     display: flex;
     align-items: center;
     background-color: #DE0000;
+    border-right: black solid 0.2rem;
   }
 
   h1{
-    font-size: 4em;
+    font-size: 2rem;
 		font-family: carbonBlock;
     margin: 0;
-    padding: 0.05em 0.25em;
+    padding: 0.05rem 0.25rem;
   }
 
 	h2 {
-		font-size: 2em;
+		font-size: 1.5rem;
 		font-family: carbonBlock;
     text-transform: uppercase;
     margin: 0;
     text-align: center;
-    padding: 0.05em 0.25em;
+    padding: 0.05rem 0.25rem;
 	}
 
   .venue {

@@ -30,10 +30,10 @@
 </script>
 
 <main>
-	<h2>18th December 2021</h2>
-	<p>In 2020 DanFest went virtual. In 2021 DanFest is taking one step back towards the real world. You have been selected to participate in a VR experience at <a href="https://www.navrtar.com/">Navrtar</a> in Ealing on 18th December. There is limited availability in the VR team but plus ones are welcome to the after party at a pub in Ealing.</p>
-	<p>The experience and food will be included in your DanFest2021 ticket</p>
-	<p>Please enter your invitation code, choose whether you want to shoot zombies or aliens and RSVP below</p>
+	<h2>DANFEST 2021</h2>
+	<p>In 2020 DanFest went virtual. In 2021 DanFest is taking one step back towards the real world. You have been selected to participate in a VR experience at <a href="https://www.navrtar.com/">Navrtar</a> in Ealing on 18th December at 18:00. There is limited availability in the VR team but plus ones are welcome to the after party at a pub in Ealing.</p>
+	<p>The experience will be included in your DanFest2021 ticket</p>
+	<p>Please enter your invitation code, choose whether you want our VR team to shoot zombies or aliens and RSVP below</p>
 		
 	<div class="form">
 		<input type="text" bind:value={invitationCode} placeholder="Enter your invitation code">
@@ -72,9 +72,10 @@
 	
 	h2 {
 		text-align:center;
-		font-size: 2em;
+		font-size: 2rem;
 		font-family: carbonBlock;
 		background-color: #DE0000;
+		margin-top: 0.5rem;
 	}
 
 	p {
@@ -85,7 +86,7 @@
 	.form {
 		display: flex;
 		flex-direction: column;
-		gap: 1em;
+		gap: 1rem;
 		width: 75%;
 		margin: 0 auto;
 		padding: 10px;
@@ -96,9 +97,9 @@
 		background: red;
 		transition: all 0.2s ease;
 		padding: 10px;
-		border: black 0.2em solid;
+		border: black 0.2rem solid;
 		font-family: carbonBlock;
-		font-size: 1.5em;
+		font-size: 1.5rem;
 	}
 	
 	input[type=text]{
@@ -112,10 +113,10 @@
 	.attendee{
 		display: flex;
 		justify-content: space-between;
-		padding-left: 1em;
-		padding-right: 1em;
-		margin: 1em auto;
-		border: black 0.1em solid;
+		padding-left: 1rem;
+		padding-right: 1rem;
+		margin: 1rem auto;
+		border: black 0.1rem solid;
 		background: linear-gradient(to right, red 50%, #EFB700 50%);
 		width: 75%;
 		transform: skewX(-10deg);
@@ -161,7 +162,7 @@
     	cursor: pointer;
 		color: rgba(0,0,0,0.2);
 		transition: all 0.2s ease;
-		font-size:0.9em;
+		font-size:0.9rem;
 	}
 
 	input:checked + label[for=aliens] {
@@ -176,7 +177,7 @@
     	cursor: pointer;
 		color: rgba(0,0,0,0.2);
 		transition: all 0.2s ease;
-		font-size:0.9em;
+		font-size:0.9rem;
 	}
 
 	input:checked + label[for=attending] {
